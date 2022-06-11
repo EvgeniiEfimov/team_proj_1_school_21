@@ -1,5 +1,11 @@
-//I WANT TO PLAY WITH YOU
-//        YOUR FRIEND, AI
+// HELLO, TEAM! <3
+
+#include <stdio.h>
+
+// added functions
+
+int main() {
 
 
 
+}
