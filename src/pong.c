@@ -3,19 +3,16 @@
 #define WIDTH_SCRING 80
 #define HEIGHT_SCRING 25
 
-void screen_rendering(int ballX, int ballY, int rocket_one, int 
-rocket_two, int score_o, int score_t);
+void screen_rendering(int ballX, int ballY, int rocket_one, int rocket_two, int score_o, int score_t);
 int rocket_one_move(int rocket_o, int height_scring, char c);
 int rocket_two_move(int rocket_t, int height_scring, char c);
 int znach_ofs(int coorY, int height_scring, int ofs);
-int znach_ofsX(int coorX, int coorY, int rocket_one_position, int 
-rocket_two_position, int width_scring, int ofsX);
+int znach_ofsX(int coorX, int coorY, int rocket_one_position, int rocket_two_position, int width_scring, int ofsX);
 int score_add_two(int score, int coorX);
 int score_add_one(int score, int coorX, int width_scring);
 int win_score(int score_one, int score_two);
 int start_stop_ball_x(int coorX, int width_scring);
-int start_stop_ball_y(int coorX, int coorY, int width_scring, int 
-height_scring);
+int start_stop_ball_y(int coorX, int coorY, int width_scring, int height_scring);
 
 int main() {
   int ball_position_x = WIDTH_SCRING / 2;
@@ -32,19 +29,15 @@ int main() {
 while(game) {
 c = getchar();
 if ((c == 'a') || (c == 'z')) {
-       rocket_one_position = rocket_one_move(rocket_one_position, 
-HEIGHT_SCRING, c);
+       rocket_one_position = rocket_one_move(rocket_one_position, HEIGHT_SCRING, c);
 } else if ((c == 'k') || (c == 'm')) {
-           rocket_two_position = rocket_two_move(rocket_two_position, 
-HEIGHT_SCRING, c);
+           rocket_two_position = rocket_two_move(rocket_two_position, HEIGHT_SCRING, c);
 }
 offset = znach_ofs(ball_position_y, HEIGHT_SCRING, offset);
-offsetX = znach_ofsX(ball_position_x, ball_position_y, 
-rocket_one_position, rocket_two_position, WIDTH_SCRING, offsetX);
+offsetX = znach_ofsX(ball_position_x, ball_position_y, rocket_one_position, rocket_two_position, WIDTH_SCRING, offsetX);
 ball_position_x = start_stop_ball_x(ball_position_x, WIDTH_SCRING);
 
-screen_rendering(ball_position_x, ball_position_y, rocket_one_position, 
-rocket_two_position, score_one, score_two);
+screen_rendering(ball_position_x, ball_position_y, rocket_one_position, rocket_two_position, score_one, score_two);
 
 ball_position_y = ball_position_y + offset;
 ball_position_x = ball_position_x + offsetX;
@@ -54,8 +47,7 @@ game = win_score(score_one, score_two);
 }
 }
 
-void screen_rendering(int ballX, int ballY, int rocket_one, int 
-rocket_two, int score_o, int score_t) {
+void screen_rendering(int ballX, int ballY, int rocket_one, int rocket_two, int score_o, int score_t) {
     for (int y = 0; y < HEIGHT_SCRING; ++y) {
         for (int x = 0; x < WIDTH_SCRING; ++x) {
              if (y == 2 && x == (WIDTH_SCRING / 2 - 5)) {
@@ -65,16 +57,12 @@ rocket_two, int score_o, int score_t) {
              } else if ((y == ballY) && (x == ballX)) {
                  printf("0");
              } else if ((y == 0 && x != 0 && x != WIDTH_SCRING) ||
-                        (y == HEIGHT_SCRING - 1 && x != 0 && x != 
-WIDTH_SCRING - 1)) {
+                        (y == HEIGHT_SCRING - 1 && x != 0 && x != WIDTH_SCRING - 1)) {
                 printf("-");
             } else if ((x == 0 && y != 0 && y != HEIGHT_SCRING - 1) ||
-                        (x == WIDTH_SCRING - 1 && y != 0 && y != 
-HEIGHT_SCRING - 1) ||
-                        (x == WIDTH_SCRING / 2) || (x == 3 && (y == 
-rocket_one || y == rocket_one + 1 || y == rocket_one - 1)) ||
-                        (x == WIDTH_SCRING - 4  && (y == rocket_two || y 
-== rocket_two + 1 || y == rocket_two - 1))) {
+                        (x == WIDTH_SCRING - 1 && y != 0 && y != HEIGHT_SCRING - 1) ||
+                        (x == WIDTH_SCRING / 2) || (x == 3 && (y == rocket_one || y == rocket_one + 1 || y == rocket_one - 1)) ||
+                        (x == WIDTH_SCRING - 4  && (y == rocket_two || y == rocket_two + 1 || y == rocket_two - 1))) {
                                 printf("|");
             } else {
                 printf(" ");
@@ -92,17 +80,16 @@ int rocket_one_move(int rocket_o, int height_scring, char c) {
         } else {
              f = rocket_o - 2;
         }
-        return ("%d", f);
     } else if (c == 'z') {
         if (rocket_o > (height_scring - 4)) {
             f = rocket_o;
         } else {
             f = rocket_o + 2;
         }
-        return ("%d", f);
     } else {
-        return ("%d", rocket_o);
+        f = rocket_o;
     }
+    return f;
 }
 
 int rocket_two_move(int rocket_t, int height_scring, char c) {
@@ -113,17 +100,16 @@ int rocket_two_move(int rocket_t, int height_scring, char c) {
         } else {
              f = rocket_t - 2;
         }
-        return ("%d", f);
     } else if (c == 'm') {
         if (rocket_t > (height_scring - 4)) {
             f = rocket_t;
         } else {
             f = rocket_t + 2;
         }
-        return ("%d", f);
     } else {
-        return ("%d", rocket_t);
+        f = rocket_t;
     }
+    return f;
 }
 
 
@@ -134,14 +120,10 @@ int znach_ofs(int coorY, int height_scring, int ofs) {
     return ofs;
 }
 
-int znach_ofsX(int coorX, int coorY, int rocket_one_position, int 
-rocket_two_position, int width_scring, int ofsX) {
-    if ((coorX == 3 && (coorY == rocket_one_position || coorY == 
-rocket_one_position + 1 ||
-     coorY == rocket_one_position - 1)) || (coorX == WIDTH_SCRING - 4  && 
-(coorY == rocket_two_position || 
-     coorY == rocket_two_position + 1 || coorY == rocket_two_position - 
-1))) {
+int znach_ofsX(int coorX, int coorY, int rocket_one_position, int rocket_two_position, int width_scring, int ofsX) {
+    if ((coorX == 3 && (coorY == rocket_one_position || coorY == rocket_one_position + 1 ||
+     coorY == rocket_one_position - 1)) || (coorX == width_scring - 4  && (coorY == rocket_two_position ||
+     coorY == rocket_two_position + 1 || coorY == rocket_two_position - 1))) {
         ofsX = -(ofsX);
     }
     return ofsX;
@@ -180,5 +162,10 @@ int start_stop_ball_x(int coorX, int width_scring) {
     }
     return coorX;
 }
+
+
+
+
+
 
 
